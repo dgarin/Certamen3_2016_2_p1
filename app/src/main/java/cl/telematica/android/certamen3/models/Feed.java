@@ -1,13 +1,15 @@
-package cl.telematica.android.certamen3;
+package cl.telematica.android.certamen3.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import io.realm.RealmObject;
 
 /**
  * Created by franciscocabezas on 11/18/16.
  */
 
-public class Feed implements Parcelable {
+public class Feed extends RealmObject implements Parcelable {
 
     private String title;
     private String link;

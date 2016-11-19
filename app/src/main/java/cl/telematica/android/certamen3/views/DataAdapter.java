@@ -1,4 +1,4 @@
-package cl.telematica.android.certamen3;
+package cl.telematica.android.certamen3.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,12 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import cl.telematica.android.certamen3.R;
+import cl.telematica.android.certamen3.activities.DataBaseActivity;
+import cl.telematica.android.certamen3.models.Feed;
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 /**
  * Created by franciscocabezas on 11/18/16.
  */
@@ -22,6 +28,9 @@ import java.util.List;
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     private List<Feed> mDataset;
     private Context mContext;
+    public Realm realm;
+    String a, b, c, d, e, f;
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
@@ -33,6 +42,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
             mTextView = (TextView) v.findViewById(R.id.textTitle);
             mImageView = (ImageView) v.findViewById(R.id.imgBackground);
             mAddBtn = (Button) v.findViewById(R.id.add_btn);
+
         }
     }
 
@@ -48,6 +58,18 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
         return new ViewHolder(v);
     }
+
+    /*private void add_data(String a, String b, String c, String d, String e, String f){
+        realm.beginTransaction();
+        Feed feeds = realm.createObject(Feed.class); // Create a new object
+        feeds.setTitle(a);
+        feeds.setLink(b);
+        feeds.setAuthor(c);
+        feeds.setPublishedDate(d);
+        feeds.setContent(e);
+        feeds.setImage(f);
+        realm.commitTransaction();
+    }*/
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
@@ -82,8 +104,17 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
                 feed.setFavorite(!feed.isFavorite());
                 if(feed.isFavorite()) {
                     holder.mAddBtn.setText(mContext.getString(R.string.added));
+                    System.out.println(feed.getTitle().toString());
+
+                    Realm realm = Realm.getDefaultInstance();
+                    realm.beginTransaction();
+                    realm.copyToRealm(feed);
+                    realm.commitTransaction();
+                    //add_data(feed.getTitle().toString(),feed.getLink().toString(),feed.getAuthor().toString(),
+                      //      feed.getPublishedDate().toString(), feed.getContent().toString(), feed.getImage().toString());
                 } else {
                     holder.mAddBtn.setText(mContext.getString(R.string.like));
+
                 }
             }
         });
@@ -93,4 +124,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     public int getItemCount() {
         return mDataset.size();
     }
+
+
+
 }
