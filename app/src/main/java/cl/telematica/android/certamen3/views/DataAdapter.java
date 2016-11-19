@@ -114,6 +114,16 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
                       //      feed.getPublishedDate().toString(), feed.getContent().toString(), feed.getImage().toString());
                 } else {
                     holder.mAddBtn.setText(mContext.getString(R.string.like));
+                    /*final RealmResults<Feed> results = realm.where(Feed.class).equalTo(feed.getTitle().toString()).findAll();
+
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+
+                            // Delete all matches
+                            results.deleteAllFromRealm();
+                        }
+                    });*/
 
                 }
             }

@@ -1,11 +1,13 @@
 package cl.telematica.android.certamen3.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,9 +93,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            /**
-             * You should manage the action to show the favorite items saved by the user
-             */
+            Intent i = new Intent(MainActivity.this,MyFavsActivity.class);
+            startActivity(i);
             return true;
         }
 
